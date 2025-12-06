@@ -443,10 +443,10 @@
       goTo(0);
     })();
 
-    // Inject mobile number from environment variable MOBILENUMBER (set in Netlify). Falls back to a placeholder.
+    // Inject mobile number from environment variable MOBILENUMBER (set in Netlify/build). Falls back to a placeholder.
     (function () {
-      const ENV_PHONE = '${MOBILENUMBER:-}';
-      const phoneRaw = ENV_PHONE && ENV_PHONE !== '${MOBILENUMBER:-}' ? ENV_PHONE : '';
+      const ENV_PHONE = '${MOBILENUMBER}'; // This gets replaced at build time by envsubst in Netlify
+      const phoneRaw = ENV_PHONE && ENV_PHONE !== '${MOBILENUMBER}' ? ENV_PHONE : '';
       const phoneDigits = phoneRaw.replace(/\D/g, '');
 
       const phoneDisplay = document.getElementById('phoneDisplay');
