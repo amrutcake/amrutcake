@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amrut Cake Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: rgba(255, 255, 255, 0.05);
+      --accent: #f7a325;
+      --accent-2: #ffce73;
+      --text: #f4f4f0;
+      --muted: #c4c6cc;
+      --card: rgba(255, 255, 255, 0.04);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", "Manrope", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(247, 163, 37, 0.12), transparent 25%),
+                  radial-gradient(circle at 80% 10%, rgba(255, 206, 115, 0.12), transparent 26%),
+                  linear-gradient(160deg, #11131a 0%, #0c0d11 100%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 22px 64px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(90deg, rgba(17, 19, 26, 0.9), rgba(17, 19, 26, 0.85));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 14px 18px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.6px;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #201306;
+      box-shadow: 0 10px 30px rgba(247, 163, 37, 0.25);
+    }
+
+    .logo span:last-child {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #1f1206;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(247, 163, 37, 0.45);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .cta:hover { transform: translateY(-1px); box-shadow: 0 16px 40px rgba(247, 163, 37, 0.55); }
+    .cta:active { transform: translateY(0); }
+
+    .hero {
+      margin: 56px 0 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin: 0 0 14px;
+      line-height: 1.2;
+    }
+
+    .hero-text p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin: 18px 0 36px;
+    }
+
+    .highlight h3 { margin: 0 0 8px; }
+    .highlight p { margin: 0; color: var(--muted); }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 42px 0 12px;
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+    }
+
+    .slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      background: #0c0d11;
+      max-height: 500px;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 520ms ease;
+      height: 500px;
+    }
+
+    .slide {
+      position: relative;
+      min-width: 100%;
+      height: 500px;
+      flex-shrink: 0;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #0c0d11;
+    }
+
+    .slide-caption {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 12px;
+      color: #fefefe;
+      font-weight: 600;
+      backdrop-filter: blur(6px);
+    }
+
+    .slider-controls {
+      position: absolute;
+      inset: auto 0 14px 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(0, 0, 0, 0.45);
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .dot.active { background: var(--accent); transform: scale(1.1); }
+
+    .rates {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .rate-card {
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      color: var(--text);
+    }
+
+    .rate-card small { color: var(--muted); }
+    .price { font-weight: 700; color: var(--accent); }
+
+    .footnote {
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      header { position: static; border-radius: 12px; }
+      .slides { grid-template-columns: repeat(3, 100%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">AC</div>
+        <span>Amrut Cake Studio</span>
+      </div>
+      <a class="cta" id="whatsappTop" href="https://wa.me/15023374620?text=Hi%20Amrut%20Cake%20Studio!%20I%27d%20like%20to%20order%20a%20cake." target="_blank" rel="noreferrer">
+        Chat on WhatsApp
+      </a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Freshly baked celebration cakes, handcrafted daily.</h1>
+        <p>Order bespoke cakes with real ingredients, smooth whipped cream, and memorable finishes. We design, bake, and deliver with care.</p>
+        <div class="chips">
+          <div class="chip">Same-day slots (limited)</div>
+          <div class="chip">Eggless available</div>
+          <div class="chip">Custom toppers</div>
+          <div class="chip">City-wide delivery</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-title">Why people pick us</div>
+        <div class="highlights">
+          <div class="highlight">
+            <h3>Clean ingredients</h3>
+            <p>French butter, Belgian cocoa, seasonal fruit — no premixes.</p>
+          </div>
+          <div class="highlight">
+            <h3>Design-forward</h3>
+            <p>Minimal, floral, kids themes, and elegant tiered builds.</p>
+          </div>
+        </div>
+        <a class="cta" id="whatsappHero" href="https://wa.me/15023374620?text=Hi%20Amrut%20Cake%20Studio!%20I%20want%20a%20cake%20for%20(date%20and%20theme)." target="_blank" rel="noreferrer">Order via WhatsApp</a>
+      </div>
+    </section>
+
+    <div class="section-title">Signature cakes</div>
+    <div class="slider" aria-label="Cake photo slider">
+      <div class="slides" id="slides"></div>
+      <div class="slider-controls" id="dots" aria-label="Slider controls"></div>
+    </div>
+
+    <div class="section-title">Rates & sizing</div>
+    <div class="rates" id="rates"></div>
+
+    <div class="section-title">How to order</div>
+    <div class="panel">
+      <div class="highlights">
+        <div class="highlight">
+          <h3>Share your date</h3>
+          <p>Tell us your event date, servings, and dietary needs.</p>
+        </div>
+        <div class="highlight">
+          <h3>Pick a vibe</h3>
+          <p>Send reference photos or pick from our signature looks.</p>
+        </div>
+        <div class="highlight">
+          <h3>Confirm & relax</h3>
+          <p>We finalize the sketch, collect a token, and deliver on time.</p>
+        </div>
+      </div>
+      <a class="cta" id="whatsappBottom" href="https://wa.me/15023374620?text=Hi%20Amrut%20Cake%20Studio!%20I%20want%20to%20book%20a%20cake." target="_blank" rel="noreferrer">Start a WhatsApp chat</a>
+      <div class="footnote">Prefer a call? Reach us at +91 12345 67890 | Delivery: $10 up to 30 miles | Pickup from: Amrut Cake Studio, City Center</div>
+    </div>
+  </div>
+
+  <script>
+    // Update these arrays to change photos and pricing (no other edits needed).
+    // Put your cake photos in the 'images/' folder and update the filenames below
+    const gallery = [
+      { src: 'images/Chocolate 2.jpeg', caption: 'Chocolate Cake' },
+      { src: 'images/Chocolate Cherry.jpeg', caption: 'Chocolate Cherry' },
+      { src: 'images/Chocolate.jpeg', caption: 'Classic Chocolate' },
+      { src: 'images/Custom Cake 3.jpeg', caption: 'Custom Cake' },
+      { src: 'images/Custom Cake2.jpeg', caption: 'Custom Design' },
+      { src: 'images/Customized Cricket Theme.jpeg', caption: 'Cricket Theme' },
+      { src: 'images/Pineapple.jpeg', caption: 'Pineapple Cake' },
+      { src: 'images/Vanilla(1).jpeg', caption: 'Vanilla Delight' },
+      { src: 'images/Vanilla.jpeg', caption: 'Classic Vanilla' }
+    ];
+
+    const rates = [
+      { name: 'Vanilla', note: 'Standard build', price: '$35' },
+      { name: 'Pineapple', note: 'Standard build', price: '$40' },
+      { name: 'Chocolate', note: 'Standard build', price: '$40' },
+      { name: 'Tall Celebration', note: 'Extended height', price: '$65' },
+      { name: 'Eggless Cake', note: 'Eggless option', price: '$40' }
+    ];
+
+    (function () {
+      const slideTrack = document.getElementById('slides');
+      const dotsHost = document.getElementById('dots');
+      const ratesHost = document.getElementById('rates');
+      let slides = [];
+      let active = 0;
+      let timer;
+
+      function renderSlides() {
+        slideTrack.innerHTML = '';
+        gallery.forEach(({ src, caption }) => {
+          const slide = document.createElement('div');
+          slide.className = 'slide';
+
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = caption;
+          img.loading = 'lazy';
+
+          const cap = document.createElement('div');
+          cap.className = 'slide-caption';
+          cap.textContent = caption;
+
+          slide.appendChild(img);
+          slide.appendChild(cap);
+          slideTrack.appendChild(slide);
+        });
+        slides = Array.from(slideTrack.querySelectorAll('.slide'));
+      }
+
+      function renderDots() {
+        dotsHost.innerHTML = '';
+        slides.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'dot';
+          dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          dot.addEventListener('click', () => goTo(i));
+          dotsHost.appendChild(dot);
+        });
+      }
+
+      function renderRates() {
+        ratesHost.innerHTML = '';
+        rates.forEach(({ name, note, price }) => {
+          const card = document.createElement('div');
+          card.className = 'rate-card';
+
+          const left = document.createElement('div');
+          const title = document.createElement('div');
+          title.textContent = name;
+          const small = document.createElement('small');
+          small.textContent = note;
+          left.appendChild(title);
+          left.appendChild(small);
+
+          const right = document.createElement('div');
+          right.className = 'price';
+          right.textContent = price;
+
+          card.appendChild(left);
+          card.appendChild(right);
+          ratesHost.appendChild(card);
+        });
+      }
+
+      function goTo(index) {
+        if (!slides.length) return;
+        active = index % slides.length;
+        slideTrack.style.transform = 'translateX(-' + (active * 100) + '%)';
+        Array.from(dotsHost.children).forEach((dot, i) => {
+          dot.classList.toggle('active', i === active);
+        });
+        restartTimer();
+      }
+
+      function next() { goTo((active + 1) % slides.length); }
+
+      function restartTimer() {
+        clearInterval(timer);
+        timer = setInterval(next, 5000);
+      }
+
+      renderSlides();
+      renderDots();
+      renderRates();
+      goTo(0);
+    })();
+  </script>
+</body>
+</html>
