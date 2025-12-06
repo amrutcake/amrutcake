@@ -270,7 +270,7 @@
         <div class="logo-mark">AC</div>
         <span>Amrut Cake Studio</span>
       </div>
-      <a class="cta" id="whatsappTop" href="https://wa.me/15023374620?text=Hi%20Amrut%20Cake%20Studio!%20I%27d%20like%20to%20order%20a%20cake." target="_blank" rel="noreferrer">
+      <a class="cta" id="whatsappTop" href="#" target="_blank" rel="noreferrer">
         Chat on WhatsApp
       </a>
     </header>
@@ -298,7 +298,7 @@
             <p>Minimal, floral, kids themes, and elegant tiered builds.</p>
           </div>
         </div>
-        <a class="cta" id="whatsappHero" href="https://wa.me/15023374620?text=Hi%20Amrut%20Cake%20Studio!%20I%20want%20a%20cake%20for%20(date%20and%20theme)." target="_blank" rel="noreferrer">Order via WhatsApp</a>
+        <a class="cta" id="whatsappHero" href="#" target="_blank" rel="noreferrer">Order via WhatsApp</a>
       </div>
     </section>
 
@@ -327,8 +327,8 @@
           <p>We finalize the sketch, collect a token, and deliver on time.</p>
         </div>
       </div>
-      <a class="cta" id="whatsappBottom" href="https://wa.me/15023374620?text=Hi%20Amrut%20Cake%20Studio!%20I%20want%20to%20book%20a%20cake." target="_blank" rel="noreferrer">Start a WhatsApp chat</a>
-      <div class="footnote">Prefer a call? Reach us at +91 12345 67890 | Delivery: $10 up to 30 miles | Pickup from: Amrut Cake Studio, City Center</div>
+      <a class="cta" id="whatsappBottom" href="#" target="_blank" rel="noreferrer">Start a WhatsApp chat</a>
+      <div class="footnote">Prefer a call? Reach us at <span id="phoneDisplay">Set MOBILENUMBER</span> | Delivery: $10 up to 30 miles | Pickup from: Amrut Cake Studio, City Center</div>
     </div>
   </div>
 
@@ -441,6 +441,37 @@
       renderDots();
       renderRates();
       goTo(0);
+    })();
+
+    // Inject mobile number from environment variable MOBILENUMBER (set in Netlify). Falls back to a placeholder.
+    (function () {
+      const ENV_PHONE = '${MOBILENUMBER:-}';
+      const phoneRaw = ENV_PHONE && ENV_PHONE !== '${MOBILENUMBER:-}' ? ENV_PHONE : '';
+      const phoneDigits = phoneRaw.replace(/\D/g, '');
+
+      const phoneDisplay = document.getElementById('phoneDisplay');
+      if (phoneDisplay) {
+        phoneDisplay.textContent = phoneRaw || 'Set MOBILENUMBER';
+      }
+
+      const links = [
+        { id: 'whatsappTop', msg: "Hi Amrut Cake Studio! I'd like to order a cake." },
+        { id: 'whatsappHero', msg: "Hi Amrut Cake Studio! I want a cake for (date and theme)." },
+        { id: 'whatsappBottom', msg: "Hi Amrut Cake Studio! I want to book a cake." }
+      ];
+
+      links.forEach(({ id, msg }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (phoneDigits) {
+          const url = 'https://wa.me/' + phoneDigits + '?text=' + encodeURIComponent(msg);
+          el.href = url;
+          el.removeAttribute('aria-disabled');
+        } else {
+          el.href = '#';
+          el.setAttribute('aria-disabled', 'true');
+        }
+      });
     })();
   </script>
 </body>
