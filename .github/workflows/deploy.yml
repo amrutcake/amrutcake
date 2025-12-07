@@ -25,11 +25,11 @@ jobs:
       - name: Debug - Check if secret exists
         run: |
           if [ -z "${{ secrets.MOBILENUMBER }}" ]; then
-            echo "⚠️  WARNING: MOBILENUMBER secret is empty or not set!"
-            echo "Please set MOBILENUMBER in GitHub Settings > Secrets and variables > Actions"
-          else
-            echo "✅ MOBILENUMBER secret is set (length: ${#MOBILENUMBER})"
+            echo "⚠️  MOBILENUMBER secret is empty or not set."
+            echo "Set it at: Settings > Secrets and variables > Actions > New repository secret (name: MOBILENUMBER)."
+            exit 1
           fi
+          echo "✅ MOBILENUMBER secret is set (length: ${#MOBILENUMBER})"
         env:
           MOBILENUMBER: ${{ secrets.MOBILENUMBER }}
 
