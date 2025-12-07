@@ -1,5 +1,5 @@
-// This file will be generated during GitHub Actions deployment
-// For local development, add your mobile number here:
+// This file will be overwritten during GitHub Actions deployment
+// In Codespaces, it reads from your Codespaces secret
 window.AMRUT_CONFIG = {
-  MOBILENUMBER: 'YOUR_MOBILE_NUMBER_HERE'
+  MOBILENUMBER: '__MOBILENUMBER__'  // Will be replaced by build script
 };
