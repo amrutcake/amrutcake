@@ -193,11 +193,12 @@
       align-items: center;
       justify-content: center;
       background: #0c0d11;
+      padding: 16px;
     }
 
     .slide img {
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 100%;
+      max-height: 100%;
       width: auto;
       height: auto;
       object-fit: scale-down;
@@ -382,7 +383,10 @@
           const img = document.createElement('img');
           img.src = src;
           img.alt = caption;
-          img.loading = 'lazy';
+          img.loading = 'eager';
+          img.decoding = 'async';
+          img.onload = () => console.log('Loaded:', caption);
+          img.onerror = () => console.warn('Failed to load:', src);
 
           const cap = document.createElement('div');
           cap.className = 'slide-caption';
