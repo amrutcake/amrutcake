@@ -174,7 +174,7 @@
       box-shadow: var(--shadow);
       background: #0c0d11;
       width: 100%;
-      aspect-ratio: 16/9;
+      min-height: 400px;
     }
 
     .slides {
@@ -193,7 +193,7 @@
       align-items: center;
       justify-content: center;
       background: #0c0d11;
-      padding: 16px;
+      padding: 20px;
     }
 
     .slide img {
@@ -267,9 +267,13 @@
 
     @media (max-width: 640px) {
       header { position: static; border-radius: 12px; }
-      .slider { aspect-ratio: 9/12; }
+      .slider { min-height: 500px; }
       .slide-caption { bottom: 12px; left: 12px; padding: 10px 12px; font-size: 12px; }
       .dot { width: 14px; height: 14px; }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      .slider { min-height: 300px; }
     }
   </style>
 </head>
