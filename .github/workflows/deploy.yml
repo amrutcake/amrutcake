@@ -23,13 +23,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generate config.js with mobile number
+        env:
+          MOBILE_NUMBER: ${{ secrets.MOBILENUMBER }}
         run: |
-          mkdir -p .
-          cat > config.js << 'CONFIGEOF'
+          echo "DEBUG: MOBILE_NUMBER is: $MOBILE_NUMBER"
+          cat > config.js << 'EOF'
           window.AMRUT_CONFIG = {
-            MOBILENUMBER: '${{ secrets.MOBILENUMBER }}'
+            MOBILENUMBER: 'PLACEHOLDER_MOBILE'
           };
-          CONFIGEOF
+          EOF
+          sed -i "s/PLACEHOLDER_MOBILE/$MOBILE_NUMBER/g" config.js
+          echo "Generated config.js:"
           cat config.js
 
       - name: Setup Pages
