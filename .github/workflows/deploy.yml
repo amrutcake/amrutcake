@@ -22,18 +22,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate config.js with mobile number
-        env:
-          MOBILE_NUMBER: ${{ secrets.MOBILENUMBER }}
+      - name: Debug - Check if secret exists
         run: |
-          echo "DEBUG: MOBILE_NUMBER is: $MOBILE_NUMBER"
+          if [ -z "${{ secrets.MOBILENUMBER }}" ]; then
+            echo "⚠️  WARNING: MOBILENUMBER secret is empty or not set!"
+            echo "Please set MOBILENUMBER in GitHub Settings > Secrets and variables > Actions"
+          else
+            echo "✅ MOBILENUMBER secret is set (length: ${#MOBILENUMBER})"
+          fi
+        env:
+          MOBILENUMBER: ${{ secrets.MOBILENUMBER }}
+
+      - name: Generate config.js with mobile number
+        run: |
           cat > config.js << 'EOF'
           window.AMRUT_CONFIG = {
-            MOBILENUMBER: 'PLACEHOLDER_MOBILE'
+            MOBILENUMBER: '${{ secrets.MOBILENUMBER }}'
           };
           EOF
-          sed -i "s/PLACEHOLDER_MOBILE/$MOBILE_NUMBER/g" config.js
-          echo "Generated config.js:"
+          echo "✅ Generated config.js"
           cat config.js
 
       - name: Setup Pages
