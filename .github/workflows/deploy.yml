@@ -24,11 +24,13 @@ jobs:
 
       - name: Generate config.js with mobile number
         run: |
-          cat > config.js << EOF
+          mkdir -p .
+          cat > config.js << 'CONFIGEOF'
           window.AMRUT_CONFIG = {
             MOBILENUMBER: '${{ secrets.MOBILENUMBER }}'
           };
-          EOF
+          CONFIGEOF
+          cat config.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
