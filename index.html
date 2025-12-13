@@ -167,10 +167,13 @@
     }
 
     .slider {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex;
       gap: 16px;
       border-radius: 18px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
 
     .slide {
@@ -181,6 +184,8 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: var(--shadow);
       aspect-ratio: 1;
+      flex: 0 0 280px;
+      min-width: 280px;
     }
 
     .slide img {
@@ -243,7 +248,7 @@
 
     @media (max-width: 640px) {
       header { position: static; border-radius: 12px; }
-      .slider { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+      .slide { flex: 0 0 150px; min-width: 150px; }
       .slide-caption { font-size: 12px; padding: 10px 12px; }
     }
   </style>
