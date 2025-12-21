@@ -351,18 +351,12 @@
     ];
 
     const rates = [
-      { name: 'Vanilla', note: 'Standard build • 1 KG', price: '$35' },
-      { name: 'Pineapple', note: 'Standard build • 1 KG', price: '$40' },
-      { name: 'Chocolate', note: 'Standard build • 1 KG', price: '$40' },
-      { name: 'Eggless Cake', note: 'Eggless option • 1 KG', price: '$45' },
-      { name: 'Rasmalai Cake', note: 'Special flavor • 1 KG', price: '$45' },
+      { name: 'Vanilla', note: '1/2 Kg • 1 Kg', price: '$25 • $35' },
+      { name: 'Pineapple', note: '1/2 Kg • 1 Kg', price: '$25 • $40' },
+      { name: 'Chocolate', note: '1/2 Kg • 1 Kg', price: '$25 • $40' },
+      { name: 'Eggless Cake', note: '1/2 Kg • 1 Kg', price: '$30 • $45' },
+      { name: 'Rasmalai', note: '1/2 Kg • 1 Kg', price: '$30 • $45' },
       { name: 'Custom Cake', note: 'Quote on request', price: 'Discuss' }
-        { name: 'Vanilla', note: '1/2 Kg • 1 Kg', price: '$25 • $35' },
-        { name: 'Pineapple', note: '1/2 Kg • 1 Kg', price: '$25 • $40' },
-        { name: 'Chocolate', note: '1/2 Kg • 1 Kg', price: '$25 • $40' },
-        { name: 'Eggless Cake', note: '1/2 Kg • 1 Kg', price: '$30 • $45' },
-        { name: 'Rasmalai', note: '1/2 Kg • 1 Kg', price: '$30 • $45' },
-        { name: 'Custom Cake', note: 'Quote on request', price: 'Discuss' }
     ];
 
     (function () {
@@ -392,8 +386,12 @@
       // Render Rates
       ratesHost.innerHTML = '';
       rates.forEach(({ name, note, price }) => {
-        const card = document.createElement('div');
+        const card = document.createElement('a');
         card.className = 'rate-card';
+        card.href = '#';
+        card.target = '_blank';
+        card.rel = 'noreferrer';
+        card.dataset.name = name;
 
         const left = document.createElement('div');
         const title = document.createElement('div');
@@ -439,6 +437,21 @@
         } else {
           el.href = '#';
           el.setAttribute('aria-disabled', 'true');
+        }
+      });
+
+      // Wire up price cards to open WhatsApp with selected cake name
+      const rateCards = document.querySelectorAll('.rate-card');
+      rateCards.forEach((card) => {
+        const name = card.dataset.name || 'cake';
+        const msg = `Hi Amrut Cake Studio! I'd like to order the ${name}.`;
+        if (phoneDigits && phoneDigits.length > 5) {
+          const url = 'https://wa.me/' + phoneDigits + '?text=' + encodeURIComponent(msg);
+          card.href = url;
+          card.removeAttribute('aria-disabled');
+        } else {
+          card.href = '#';
+          card.setAttribute('aria-disabled', 'true');
         }
       });
     })();
